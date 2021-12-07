@@ -19,6 +19,7 @@ public class GraduationApplication {
             System.out.println(name);
         }
         System.out.println("this is a test to github");
+        System.out.println("this is a test to local");
     }
 
 }
