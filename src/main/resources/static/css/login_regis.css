@@ -1,0 +1,124 @@
+body{
+    /* 设置背景渐变 */
+    background-image: linear-gradient(to left,
+    #9c88ff,#3cadeb);
+    display: flex;
+    justify-content: center;
+}
+.card {
+    position: relative;
+    transform-style: preserve-3d;
+    width: 1100px;
+    height: 550px;
+}
+.card_front {
+    position:relative;
+    top: 100px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,.8);
+    display: flex;
+}
+.front_left,.back_left{
+    width: 800px;
+    height: 550px;
+    /* 让图片适应大小 */
+    background-size: cover;
+}
+.front_left {
+    background-image: url("../images/front_bg.jpg");
+}
+.back_left {
+    background-image: url("../images/back_bg.png");
+}
+.front_right {
+    width: 300px;
+    height: 550px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.front_form {
+    width: 250px;
+    height: 500px;
+}
+
+h1{
+    font: 900 30px '';
+}
+.text{
+    width: 230px;
+    margin: 20px 0;
+    outline: none;
+    border: 0;
+    padding: 10px;
+    border-bottom: 3px solid rgb(80,80,170);
+    font: 900 16px '';
+}
+.forget{
+    float: right;
+    margin: 10px 0;
+}
+.login {
+    margin: 20px;
+    bottom: 80px;
+    display: block;
+    width: 200px;
+    height: 60px;
+    font: 900 30px '';
+    text-decoration: none;
+    line-height: 50px;
+    border-radius: 30px;
+    text-align: center;
+    border: none;
+}
+
+/*这个是去登录页面*/
+.to_regis {
+    position: absolute;
+    display: block;
+    bottom: 10px;
+    right: 10px;
+    width: 150px;
+    height: 30px;
+    /*background-color: black;*/
+    line-height: 30px;
+    text-align: center;
+    font: 900 16px '';
+
+}
+.to_regis:hover {
+    color: #4f7f95;
+    cursor: pointer;
+}
+.to_login:hover {
+    color: #60c7d7;
+    cursor: pointer;
+}
+/*这个是注册页面的*/
+.to_login {
+    position: absolute;
+    display: block;
+    top: 20px;
+    left: 150px;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font: 900 16px '';
+}
+.front_errorMsg {
+    position: absolute;
+    display: block;
+    width: 250px;
+    height: 30px;
+    margin-top: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: red;
+    /*background-color: red;*/
+}
+
+

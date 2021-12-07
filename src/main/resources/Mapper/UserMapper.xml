@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsiny.graduation.Mapper.UserMapper">
+
+    <insert id="addUser" parameterType="user" >
+            insert into graduation.user (user.name,user.password,user.tel) values (#{user.name},#{user.password},#{user.tel});
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+            update graduation.user set user.name = #{user.name} ,user.password = #{user.password},user.tel = #{user.tel} where user.id = #{user.id};
+    </update>
+
+    <delete id="deleteUserById" parameterType="int">
+        delete from graduation.user where id  = #{id};
+    </delete>
+
+    <resultMap id="MyUser" type="user">
+<!--        全部一样所以就不写了吧-->
+    </resultMap>
+
+    <select id="selectUserById" parameterType="int" resultMap="MyUser">
+        select * from graduation.user where id = #{id};
+    </select>
+
+    <select id="selectUsers" resultMap="MyUser">
+        select * from graduation.user;
+    </select>
+    <select id="login" resultMap="MyUser">
+        select * from graduation.user where password = #{password} and ( name = #{usernameOrTel} or tel = #{usernameOrTel} );
+    </select>
+</mapper>

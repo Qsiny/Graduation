@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册</title>
+  <link rel="stylesheet" href="css/login_regis.css">
+  <script type="text/javascript">
+    $(function (){
+      $("#btn_login").focus(function (){
+
+        $.post("test.php", { name: "John", time: "2pm" },
+                function(data){
+                  alert("Data Loaded: " + data);
+                });
+      });
+    });
+  </script>
+</head>
+<body>
+
+    <div class="card">
+      <div class="card_front">
+        <div class="front_right">
+          <div class="front_form">
+            <h1>注册</h1>
+            <input type="text" class="text" name="username" placeholder="请输入用户名">
+            <input type="text" class="text" name="tel" placeholder="请输入电话号码">
+            <input type="password" class="text" name="password" placeholder="请输入密码">
+            <input type="password" class="text" name="rePassword" placeholder="请重复输入密码">
+            <input type="submit" value="注册" class="login">
+          </div>
+          <a class="to_login" href="/toLogin">点击此处前去登录</a>
+        </div>
+        <div class="back_left"></div>
+      </div>
+    </div>
+</body>
+</html>

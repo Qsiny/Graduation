@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <link rel="stylesheet" href="css/login_regis.css">
+  <script type="text/javascript" src="jquery/jquery-3.4.1.js"></script>
+  <script type="text/javascript">
+
+  </script>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card_front">
+      <div class="front_left"></div>
+      <div class="front_right">
+        <div class="front_form">
+          <h1>登录</h1>
+          <form action="/login" method="post">
+            <label>
+              <input type="text" class="text" name="usernameOrTel" placeholder="用户名/手机号"/>
+            </label>
+            <label>
+              <input type="password" class="text" name="password" placeholder="密码"/>
+            </label>
+            <a href="#" class="forget">忘记密码?</a>
+            <input type="submit" id="btn_login" value="登录" class="login"/>
+          </form>
+          <!--添加一个error错误信息提示-->
+          <span class="front_errorMsg" th:text="${errorMsg}"></span>
+        </div>
+        <a class="to_regis" href="/toRegis">点击此处前去注册</a>
+      </div>
+  </div>
+  </div>
+</body>
+</html>

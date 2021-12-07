@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+    druid:
+      aop-patterns: com.qsiny.graduation.*  #监控SpringBean
+      filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
+
+      stat-view-servlet:   # 配置监控页功能
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        resetEnable: false
+
+      web-stat-filter:  # 监控web
+        enabled: true
+        urlPattern: /**
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+
+      filter:
+        stat:    # 对上面filters里面的stat的详细配置
+          slow-sql-millis: 1000
+          logSlowSql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+
+# mybatis全局配置文件和mapper.xml文件的扫描配置
+mybatis-plus:
+
+  type-aliases-package: com.qsiny.graduation.pojo
+    #  config-location: classpath:mybatis/mybatis-config.xml   #指定mybatis全局配置文件的路径
+  mapper-locations: classpath:Mapper/**.xml        #指定mapper.xml配置文件的路径
