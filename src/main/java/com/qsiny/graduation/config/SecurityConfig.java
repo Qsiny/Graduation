@@ -1,7 +1,5 @@
 package com.qsiny.graduation.config;
 
-import com.qsiny.graduation.service.Impl.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
