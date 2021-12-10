@@ -20,18 +20,18 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("当前per拦截地址为{}",request.getRequestURI());
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("userMsg");
-        String uri = request.getRequestURI();
-        //如果没登录，并且又访问了不该访问的地址，则将它拦截，并且让他登录
-
-        if(user == null){
-            //说明，没有登录过
-            request.setAttribute("errorMsg","请先登录");
-            request.getRequestDispatcher("/toLogin").forward(request,response);
-            return false;
-        }
+//        log.info("当前per拦截地址为{}",request.getRequestURI());
+//        HttpSession session = request.getSession();
+//        User user = (User) session.getAttribute("userMsg");
+//        String uri = request.getRequestURI();
+//        //如果没登录，并且又访问了不该访问的地址，则将它拦截，并且让他登录
+//
+//        if(user == null){
+//            //说明，没有登录过
+//            request.setAttribute("errorMsg","请先登录");
+//            request.getRequestDispatcher("/toLogin").forward(request,response);
+//            return false;
+//        }
 
         return true;
     }

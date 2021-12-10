@@ -1,14 +1,14 @@
 package com.qsiny.graduation.controller;
 
+import com.qsiny.graduation.config.SecurityConfig;
 import com.qsiny.graduation.pojo.User;
 import com.qsiny.graduation.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -29,10 +29,6 @@ public class UserController {
         return "redirect:/toLogin";
     }
 
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
-    }
 
     @GetMapping("/toRegis")
     public String toRegis(){
@@ -41,24 +37,52 @@ public class UserController {
 
 
 
-    @PostMapping("/login")
-    public String login(String usernameOrTel, String password, HttpSession httpSession, Model model){
-        User user = userServiceImpl.login(usernameOrTel, password);
+//    @PostMapping("/login")
+//    public String login(String usernameOrTel, String password, HttpSession httpSession, Model model){
+//        User user = userServiceImpl.login(usernameOrTel, password);
+//
+//        if(user == null){
+//            model.addAttribute("errorMsg","用户名或密码错误");
+//            model.addAttribute("usernameOrTel",usernameOrTel);
+//            //不存在用户，则返回错误信息
+//            return "login";
+//        }else{
+//            //session中存储着用户信息
+//            httpSession.setAttribute("userMsg",user);
+////            重定向到某一个请求
+//            return "redirect:/index.html";
+//        }
+//    }
 
-        if(user == null){
-            model.addAttribute("errorMsg","用户名或密码错误");
-            model.addAttribute("usernameOrTel",usernameOrTel);
-            //不存在用户，则返回错误信息
-            return "login";
-        }else{
-            //session中存储着用户信息
-            httpSession.setAttribute("userMsg",user);
-//            重定向到某一个请求
-            return "redirect:/index.html";
-        }
-    }
-    @GetMapping("index.html")
+    @GetMapping("/index.html")
     public String toIndex(){
         return "index";
     }
+
+    @GetMapping("/temp")
+    @ResponseBody
+    public String temp1(){
+
+        return "所有人都可以访问";
+    }
+
+    @GetMapping("/user/temp")
+    @ResponseBody
+    public String temp(){
+        return "user可以访问";
+    }
+
+    @GetMapping("/student/temp")
+    @ResponseBody
+    public String temp2(){
+        return "这是student页面";
+    }
+
+
+    @GetMapping("/login.html")
+    public String login(){
+
+        return "login";
+    }
+
 }
