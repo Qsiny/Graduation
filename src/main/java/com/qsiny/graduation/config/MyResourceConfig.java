@@ -23,6 +23,4 @@ public class MyResourceConfig {
        return new DruidDataSource();
     }
 
-
-
 }

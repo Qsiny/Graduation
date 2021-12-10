@@ -23,6 +23,6 @@ public interface UserMapper {
 
     User login(@Param("usernameOrTel") String usernameOrTel,@Param("password") String password);
 
-    User findUserByUsername(String username);
 
+    User findUserByUsername(String username);
 }

@@ -30,8 +30,7 @@
     <select id="login" resultMap="MyUser">
         select * from graduation.user where password = #{password} and ( name = #{usernameOrTel} or tel = #{usernameOrTel} );
     </select>
-    <select id="findUserByUsername" resultType="user">
+    <select id="findUserByUsername" resultType="com.qsiny.graduation.pojo.User">
         select * from graduation.user where name = #{username}
     </select>
-
 </mapper>
