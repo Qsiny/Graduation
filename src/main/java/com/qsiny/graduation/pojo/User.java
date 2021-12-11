@@ -17,6 +17,10 @@ public class User {
     private String name;
     private String password;
     private String tel;
+    private String email;
+    private String cid;
+    private String relName;
+    private String role;
 
     public User(String name, String password, String tel) {
         this.name = name;

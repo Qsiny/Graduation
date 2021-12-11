@@ -31,6 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private PasswordEncoder passwordEncoder;
 
+    private final String DEFAULT_ROLE = "user";
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.findUserByUsername(username);
@@ -38,10 +40,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             log.info("当前用户名不存在{}",username);
             return null;
         }
-        //添加角色
+
+        String role = user.getRole();
         List<GrantedAuthority> list = new ArrayList<>();
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("user");
+        GrantedAuthority grantedAuthority;
+        //添加角色
+        if(role == null){
+            grantedAuthority = new SimpleGrantedAuthority(DEFAULT_ROLE);
+        }else{
+            grantedAuthority = new SimpleGrantedAuthority(role);
+        }
         list.add(grantedAuthority);
-        return new org.springframework.security.core.userdetails.User(user.getName(), passwordEncoder.encode(user.getPassword()), list);
+        System.out.println("当前用户"+user.getName()+",已经成功添加权限");
+        System.out.println("当前用户密码为"+user.getPassword());
+        System.out.println(this.getClass().getName());
+//        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getName(), passwordEncoder.encode(user.getPassword()), list);
+//        System.out.println(user1.getPassword());
+
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
     }
 }

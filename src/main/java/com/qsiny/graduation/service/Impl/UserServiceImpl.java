@@ -3,6 +3,7 @@ package com.qsiny.graduation.service.Impl;
 import com.qsiny.graduation.Mapper.UserMapper;
 import com.qsiny.graduation.pojo.User;
 import com.qsiny.graduation.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,10 +18,21 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Resource
+    PasswordEncoder passwordEncoder;
+
+
+    @Resource
     private UserMapper userMapper;
 
     @Override
     public int addUser(User user) {
+
+        String password = user.getPassword();
+        String encodePassword = passwordEncoder.encode(password);
+        user.setPassword(encodePassword);
+        //默认注册之后都会拥有user权限
+        user.setRole("user");
+
         return userMapper.addUser(user);
     }
 

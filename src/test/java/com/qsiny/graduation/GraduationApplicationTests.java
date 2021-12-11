@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -24,16 +25,24 @@ class GraduationApplicationTests {
     @Resource
     DataSource dataSource;
 
+    @Resource
+    PasswordEncoder passwordEncoder;
+
     @Test
     void contextLoads() {
-        User user = userMapper.login("qin123456", "123123123");
+        User user = userMapper.login("qin123456", "123123");
         System.out.println(user);
 
     }
 
     @Test
     void test(){
-
+        String pwd = "123456";
+        String encode = passwordEncoder.encode(pwd);
+        System.out.println(encode);
+        //$2a$10$Iv3v.SZ2r6bZqpRpjGp57uK7NLTR69kM.KByfM5ZOTlbhvYpFB8yC
+        //$2a$10$nhUcG2Q/NjShwvajCfBHhu1f7iEI0n3wtYivDzKzJTvTZ9nQA9036
+        System.out.println(encode.length());
     }
 
     @Test
@@ -48,6 +57,12 @@ class GraduationApplicationTests {
             System.out.println(user);
         }
 
+    }
+
+    @Test
+    public void test3(){
+        User user = new User("zhangsan", "123123", "1768394145");
+        userMapper.addUser(user);
     }
 
 }
