@@ -33,4 +33,7 @@
     <select id="findUserByUsername" resultType="com.qsiny.graduation.pojo.User">
         select * from graduation.user where name = #{username}
     </select>
+    <select id="findUserByTel" resultType="com.qsiny.graduation.pojo.User">
+        select * from graduation.user where tel = #{tel}
+    </select>
 </mapper>

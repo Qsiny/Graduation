@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://47.96.39.28:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
@@ -35,7 +35,6 @@ spring:
 
 # mybatis全局配置文件和mapper.xml文件的扫描配置
 mybatis-plus:
-
   type-aliases-package: com.qsiny.graduation.pojo
     #  config-location: classpath:mybatis/mybatis-config.xml   #指定mybatis全局配置文件的路径
   mapper-locations: classpath:Mapper/**.xml        #指定mapper.xml配置文件的路径

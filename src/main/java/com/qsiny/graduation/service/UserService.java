@@ -21,4 +21,8 @@ public interface UserService {
     List<User> selectUsers();
 
     User login(String usernameOrTel,String password);
+
+    User checkUsernameExist(String username);
+
+    User checkTelExist(String tel);
 }

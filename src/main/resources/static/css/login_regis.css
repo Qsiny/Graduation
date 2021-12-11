@@ -48,7 +48,8 @@ body{
 h1{
     font: 900 30px '';
 }
-.text{
+
+.front_text {
     width: 230px;
     margin: 20px 0;
     outline: none;
@@ -57,9 +58,19 @@ h1{
     border-bottom: 3px solid rgb(80,80,170);
     font: 900 16px '';
 }
+
+.text{
+    width: 230px;
+    margin: 20px 0 0 0;
+    outline: none;
+    border: 0;
+    padding: 10px;
+    border-bottom: 3px solid rgb(80,80,170);
+    font: 900 16px '';
+}
 .forget{
     float: right;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 .login {
     margin: 20px;
@@ -118,7 +129,26 @@ h1{
     text-align: center;
     line-height: 30px;
     color: red;
+
+}
+
+.error {
+    width: 230px;
+    height: 20px;
+    display: block;
+    line-height: 20px;
+    font-size: 16px;
+    color: red;
     /*background-color: red;*/
 }
+
+.rememberMe {
+    display: block;
+    width: 250px;
+    height: 30px;
+    margin: 20px 0;
+    /*background-color: red;*/
+}
+
 
 
