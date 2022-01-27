@@ -108,6 +108,15 @@
             <version>1.1.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
 
 
         <dependency>
@@ -115,20 +124,6 @@
             <artifactId>java-jwt</artifactId>
             <version>3.4.0</version>
         </dependency>
-
-
-<!--        beanutils用于简化from表单提交-->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.8.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
 
 
         <dependency>
@@ -194,6 +189,18 @@
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- src/main/resources下的指定资源放行 -->
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>static/**</include>
+                    <include>templates/**</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

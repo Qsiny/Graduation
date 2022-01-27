@@ -4,6 +4,8 @@ import com.qsiny.graduation.config.SecurityConfig;
 import com.qsiny.graduation.pojo.User;
 import com.qsiny.graduation.service.UserService;
 import com.qsiny.graduation.util.WebUtils;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Qin
@@ -25,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     @Resource
+    RedisTemplate<String,Object> redisTemplate;
+
+    @Resource
     Filter springSecurityFilterChain;
 
     @Resource
@@ -33,7 +39,7 @@ public class UserController {
     @Resource
     private UserDetailsService userDetailsServiceImpl;
 
-    @GetMapping(value = {"/","/index"})
+    @RequestMapping(value = {"/","/index"})
     public String index(){
         return "index";
     }
@@ -44,10 +50,14 @@ public class UserController {
         return "regis";
     }
 
+    //    发送验证码,并将电话号码和验证码存储在redis中
     @GetMapping("/#vCode")
     public void code(){
 
+
     }
+
+
 
 
 //    @PostMapping("/login")
@@ -67,7 +77,7 @@ public class UserController {
 //        }
 //    }
 
-    @GetMapping("/index.html")
+    @RequestMapping("/index.html")
     public String toIndex(){
         return "index";
     }
@@ -89,6 +99,12 @@ public class UserController {
     @ResponseBody
     public String temp2(){
         return "这是student页面";
+    }
+
+    @RequestMapping("/loginSuccess")
+    public String loginSuccess(){
+//        System.out.println("成功进入！！");
+        return "login_success";
     }
 
 

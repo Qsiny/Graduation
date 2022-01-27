@@ -32,6 +32,19 @@ spring:
           enabled: true
           config:
             drop-table-allow: false
+  redis:
+    database: 0
+    port: 6379
+    host: 47.96.39.28
+    password: qin123456
+    lettuce:
+      pool:
+        min-idle: 5
+        max-idle: 10
+        max-active: 10
+        max-wait: 2ms
+      shutdown-timeout: 100ms
+
 
 # mybatis全局配置文件和mapper.xml文件的扫描配置
 mybatis-plus:
