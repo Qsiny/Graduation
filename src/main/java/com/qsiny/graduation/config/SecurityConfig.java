@@ -1,16 +1,21 @@
 package com.qsiny.graduation.config;
 
+import com.qsiny.graduation.filter.JwtAuthenticationTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -22,10 +27,12 @@ import javax.sql.DataSource;
  * @description: TODO
  * @date 2021/12/10 17:57
  */
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Resource
@@ -33,6 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     private DataSource dataSource;
+
+    @Resource
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     /**
      * 校验登录时的用户密码
@@ -42,7 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
-
     }
 
     @Override
@@ -52,15 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web)  {
-        web.ignoring().antMatchers("/css/**","/images/**","/jquery/**","/#vCode","/bootstrap/**","/toRegis","/regis/**","/","/index","/temp","/regis");
+        web.ignoring().antMatchers("/css/**","/images/**","/jquery/**","/#vCode","/bootstrap/**","/toRegis","/regis/**","/","/index","/temp","/regis","/user/login","/user/logout");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 //        配置错误页面
-
-
         http
 //                注销相关
                 .logout()
@@ -69,12 +76,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("remember-me")
                     .invalidateHttpSession(true)
                 .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 //                权限相关
                 .authorizeRequests()
+               /* //  没有登录过才可以访问
+                    .antMatchers("/user/login").anonymous()
                     .antMatchers("/user/**").hasAuthority("user")
                     .antMatchers("/student/**").hasAuthority("student")
-                    .antMatchers("/teacher/**").hasRole("teacher")
-                    .anyRequest().authenticated()
+                    .antMatchers("/teacher/**").hasRole("teacher")*/
+                    .anyRequest().permitAll()
                 //配置自动登录的东西
                 .and()
                     .rememberMe().tokenRepository(persistentTokenRepository())
@@ -82,13 +93,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //                登录相关
                 .formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/user/login")
-                .defaultSuccessUrl("/loginSuccess")
+                    .loginPage("/login.html")
+                    .loginProcessingUrl("/user/login")
+                    .defaultSuccessUrl("/loginSuccess")
                 .permitAll()
-
                 .and()
                     .csrf().disable();
+
+        http.addFilterBefore(jwtAuthenticationTokenFilter,UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -118,5 +130,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return jdbcTokenRepository;
     }
 
-
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

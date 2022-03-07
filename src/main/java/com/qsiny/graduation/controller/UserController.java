@@ -1,9 +1,12 @@
 package com.qsiny.graduation.controller;
 
 import com.qsiny.graduation.config.SecurityConfig;
+import com.qsiny.graduation.pojo.ResponseResult;
 import com.qsiny.graduation.pojo.User;
 import com.qsiny.graduation.service.UserService;
 import com.qsiny.graduation.util.WebUtils;
+import com.qsiny.graduation.utils.RedisCache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,15 +26,12 @@ import java.util.concurrent.TimeUnit;
  * @description: TODO
  * @date 2021/12/5 13:31
  */
-
+@Slf4j
 @Controller
 public class UserController {
 
     @Resource
-    RedisTemplate<String,Object> redisTemplate;
-
-    @Resource
-    Filter springSecurityFilterChain;
+    RedisCache redisCache;
 
     @Resource
     private UserService userServiceImpl;
@@ -48,6 +48,11 @@ public class UserController {
     @GetMapping("/toRegis")
     public String toRegis(){
         return "regis";
+    }
+
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "login";
     }
 
     //    发送验证码,并将电话号码和验证码存储在redis中
@@ -113,21 +118,24 @@ public class UserController {
         return "login";
     }
 
+    @ResponseBody
     @PostMapping("/regis")
-    public String regis(HttpServletRequest request){
+    public ResponseResult regis(User user){
 
 
-        User user = WebUtils.populateObject(request, new User());
-        System.out.println(user);
-        int i = userServiceImpl.addUser(user);
-        System.out.println("是否成功添加进数据库:"+i);
-        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(user.getName());
-        System.out.println(userDetails);
-
-
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
-
-        return "index";
+        //增加一个场景，如果两个用户都判定了一个用户名，但是这个用户名或者电话号码被另外一个注册了后，别人就应该无法注册这个了
+        User userByUsername = userServiceImpl.checkUsernameExist(user.getName());
+        if(userByUsername != null){
+            throw new RuntimeException("该用户名:"+user.getName() +"以被注册，请检查！");
+        }
+        User userByTel = userServiceImpl.checkTelExist(user.getTel());
+        if(userByTel != null){
+            throw new RuntimeException("该电话号码:"+user.getTel()+"以被注册，请检查！");
+        }
+        log.info("当前用户{},请求注册",user);
+        ResponseResult responseResult = userServiceImpl.addUser(user);
+        log.info("用户:{},注册成功",user.getName());
+        return responseResult;
     }
 
     @ResponseBody
@@ -146,14 +154,14 @@ public class UserController {
     @ResponseBody
     @PostMapping("/regis/checkTelExist")
     public String checkTelExist(String tel){
-        System.out.println(tel);
+//        System.out.println(tel);
         User user = userServiceImpl.checkTelExist(tel);
-        System.out.println(user);
+//        System.out.println(user);
         if(user != null){
             System.out.println("电话号码已存在");
             return "电话号码已存在";
         }
-        System.out.println("电话号码不存在");
+//        System.out.println("电话号码不存在");
         return "电话号码不存在";
     }
 
@@ -161,6 +169,7 @@ public class UserController {
     @PostMapping("/regis/test")
     public String test(User user){
         System.out.println(user);
+        System.out.println("yes");
         return "yes";
     }
 }

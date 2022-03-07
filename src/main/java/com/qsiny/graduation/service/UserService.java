@@ -1,5 +1,6 @@
 package com.qsiny.graduation.service;
 
+import com.qsiny.graduation.pojo.ResponseResult;
 import com.qsiny.graduation.pojo.User;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 
 public interface UserService {
-    int addUser(User user);
+    ResponseResult addUser(User user);
 
     int deleteUserById(int id);
 
@@ -20,9 +21,11 @@ public interface UserService {
 
     List<User> selectUsers();
 
-    User login(String usernameOrTel,String password);
-
     User checkUsernameExist(String username);
 
     User checkTelExist(String tel);
+
+    ResponseResult login(String message,String password);
+
+    ResponseResult logout();
 }

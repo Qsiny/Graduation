@@ -1,6 +1,7 @@
 package com.qsiny.graduation.service.Impl;
 
 import com.qsiny.graduation.Mapper.UserMapper;
+import com.qsiny.graduation.pojo.LoginUser;
 import com.qsiny.graduation.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +29,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
-
-    private final String DEFAULT_ROLE = "user";
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.findUserByUsername(username);
+    public UserDetails loadUserByUsername(String message) throws UsernameNotFoundException {
+
+        User user = userMapper.findUserByUsernameOrTel(message);
         if(user == null){
-            log.info("当前用户名不存在{}",username);
-            return null;
+            throw new RuntimeException("用户名或密码错误");
         }
 
-        String role = user.getRole();
-        List<GrantedAuthority> list = new ArrayList<>();
-        GrantedAuthority grantedAuthority;
-        //添加角色
-        if(role == null){
-            grantedAuthority = new SimpleGrantedAuthority(DEFAULT_ROLE);
-        }else{
-            grantedAuthority = new SimpleGrantedAuthority(role);
-        }
-        list.add(grantedAuthority);
-//        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getName(), passwordEncoder.encode(user.getPassword()), list);
-//        System.out.println(user1.getPassword());
+        ArrayList<String> permissions = new ArrayList<>();
+        permissions.add("user");
 
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
+        return new LoginUser(user,permissions);
+
+
     }
 }

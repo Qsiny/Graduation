@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://47.96.39.28:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
@@ -36,7 +36,6 @@ spring:
     database: 0
     port: 6379
     host: 47.96.39.28
-    password: qin123456
     lettuce:
       pool:
         min-idle: 5

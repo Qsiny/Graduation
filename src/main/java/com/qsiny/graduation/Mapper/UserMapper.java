@@ -27,4 +27,6 @@ public interface UserMapper {
     User findUserByUsername(String username);
 
     User findUserByTel(String tel);
+
+    User findUserByUsernameOrTel(@Param("usernameOrTel") String usernameOrTel);
 }

@@ -60,7 +60,7 @@
 
       $("#password").blur(function (){
         let password = $("#password").val();
-        console.log(password);
+        // console.log(password);
         let passwordTemp = /^[a-zA-Z]\w{5,17}$/;
         if(!passwordTemp.test(password)){
           $(".pwdError").text("密码输入不符合规范");
@@ -115,7 +115,7 @@
         <div class="front_right">
           <div class="front_form">
             <h1>注册</h1>
-            <form id="form">
+            <form id="form" content="">
               <input type="text" class="text" name="name" id="username" placeholder="请输入用户名" title="用户名以字母开头，且长度在5-16">
               <span class="error nameError"></span>
               <input type="text" class="text" name="tel" id="tel" placeholder="请输入电话号码">
@@ -164,7 +164,7 @@
                     <div class="row">
                       <div class="col-md-5">
 <!--                        这个地方可以考虑 根据发送是否成功来进行一个反馈，类似：是否达到了每日的最大次数，超时-->
-                        <input type="text" class="form-control" value="验证码输入有误" style="visibility: hidden ; color: red">
+                        <input type="text" class="form-control" value="验证码输入有误" id="code-message" style="visibility: hidden;border: none; color: red">
                       </div>
                     </div>
 
@@ -212,10 +212,29 @@
     <script type="text/javascript">
       $("#regis").click(function (){
 
+        // 获取文本框中的验证码
+          let code = $("#code").val();
+          console.log(code);
         //先判断验证码是否输入正确 如果不正确 则不会发数据给后台
+        if(code === "1234"){
+            //将表单数据传给后台 进行保存操作 然后实现页面跳转
+            $.ajax({
+                type: "POST",
+                url:"/regis",
+                data:$("#form").serialize(),
+                success: function (data){
+                    if(data==="注册成功"){
+                        console.log("注册成功，马上跳转");
+                        window.location.href = "/index";
+                    }
+                }
+            });
 
-        //将表单数据传给后台 进行保存操作 然后实现页面跳转
-        $.post("/regis/test", $("#form").serialize());
+        }else{
+            $("#code-message").css({visibility:"visible"});
+        }
+
+
 
       })
     </script>
