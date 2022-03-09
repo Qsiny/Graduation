@@ -96,6 +96,42 @@ public class UserController {
     @ResponseBody
     public String temp(){
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return "user可以访问";
     }

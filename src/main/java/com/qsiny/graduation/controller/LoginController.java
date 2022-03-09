@@ -32,7 +32,7 @@ public class LoginController {
        return userService.login(usernameOrTel,password);
     }
 
-    @PreAuthorize("hasAnyAuthority('user')")
+    @PreAuthorize("hasAnyAuthority('user111')")
     @RequestMapping("/helloOne")
     public String hello(){
         return "hello";
