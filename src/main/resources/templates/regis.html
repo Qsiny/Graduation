@@ -116,9 +116,9 @@
           <div class="front_form">
             <h1>注册</h1>
             <form id="form" content="">
-              <input type="text" class="text" name="name" id="username" placeholder="请输入用户名" title="用户名以字母开头，且长度在5-16">
+              <input type="text" class="text" name="userName" id="username" placeholder="请输入用户名" title="用户名以字母开头，且长度在5-16">
               <span class="error nameError"></span>
-              <input type="text" class="text" name="tel" id="tel" placeholder="请输入电话号码">
+              <input type="text" class="text" name="phonenumber" id="tel" placeholder="请输入电话号码">
               <span class="error telError"></span>
               <input type="password" class="text" name="password" id="password" placeholder="请输入密码" title="以字母开头，长度在6~18之间，只能包含字母、数字和下划线">
               <span class="error pwdError"></span>
@@ -223,9 +223,10 @@
                 url:"/regis",
                 data:$("#form").serialize(),
                 success: function (data){
-                    if(data==="注册成功"){
-                        console.log("注册成功，马上跳转");
+                    if(data.code === 200){
                         window.location.href = "/index";
+                    }else{
+                        alert("发生错误！！！");
                     }
                 }
             });

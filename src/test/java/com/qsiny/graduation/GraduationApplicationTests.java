@@ -39,25 +39,26 @@ class GraduationApplicationTests {
 
     @Test
     void test(){
-        String pwd = "123456";
+        String pwd = "qin123";
         String encode = passwordEncoder.encode(pwd);
         System.out.println(encode);
         //$2a$10$Iv3v.SZ2r6bZqpRpjGp57uK7NLTR69kM.KByfM5ZOTlbhvYpFB8yC
         //$2a$10$nhUcG2Q/NjShwvajCfBHhu1f7iEI0n3wtYivDzKzJTvTZ9nQA9036
+        //$2a$10$Z/6MlsRwEb4OYWmc24p25ehe.40EfpmfFH4DhX.vnyw3XoHhUprKO
         System.out.println(encode.length());
     }
 
     @Test
     public void test2(){
 
-        User lisi = new User("lisi", "23222", "23232651");
-        userMapper.addUser(lisi);
+
+
 
         String msg = "abcd";
         msg = "dcba";
         System.out.println(msg);
 
-        List<User> users = userMapper.selectUsers();
+        List<User> users = userMapper.selectList(null);
         for (User user : users) {
             System.out.println(user);
         }
@@ -66,8 +67,8 @@ class GraduationApplicationTests {
 
     @Test
     public void test3(){
-        User user = new User("zhangsan", "123123", "1768394145");
-        userMapper.addUser(user);
+
+
 
     }
 

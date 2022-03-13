@@ -45,15 +45,14 @@ public class UserServiceImpl implements UserService {
         String password = user.getPassword();
         String encodePassword = passwordEncoder.encode(password);
         user.setPassword(encodePassword);
-        //默认注册之后都会拥有user权限
-        user.setRole("user");
         List<String> permissions = new ArrayList<>();
-        permissions.add(user.getRole());
+
+        permissions.add("user");
         LoginUser loginUser = new LoginUser(user,permissions);
         String userId = String.valueOf(user.getId());
 
         //存入数据库
-        userMapper.addUser(user);
+        userMapper.insert(user);
 
         //存入redis
         redisCache.setCacheObject("userid:"+userId,loginUser);
@@ -71,22 +70,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteUserById(int id) {
-        return userMapper.deleteUserById(id);
+        return userMapper.deleteById(id);
     }
 
     @Override
     public int updateUser(User user) {
-        return userMapper.updateUser(user);
+        return userMapper.updateById(user);
     }
 
     @Override
     public User selectUserById(int id) {
-        return userMapper.selectUserById(id);
+        return userMapper.selectById(id);
     }
 
     @Override
     public List<User> selectUsers() {
-        return userMapper.selectUsers();
+        return userMapper.selectList(null);
     }
 
     @Override

@@ -48,5 +48,14 @@ spring:
 # mybatis全局配置文件和mapper.xml文件的扫描配置
 mybatis-plus:
   type-aliases-package: com.qsiny.graduation.pojo
+  type-enums-package: com/qsiny/graduation/enums
     #  config-location: classpath:mybatis/mybatis-config.xml   #指定mybatis全局配置文件的路径
   mapper-locations: classpath:Mapper/**.xml        #指定mapper.xml配置文件的路径
+#  配置默认的log
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+#      设置数据库的字段自增
+      id-type: auto
+

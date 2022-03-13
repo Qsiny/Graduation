@@ -4,39 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qsiny.graduation.Mapper.UserMapper">
 
-    <insert id="addUser" parameterType="user" >
-            insert into graduation.user (user.name,user.password,user.tel) values (#{user.name},#{user.password},#{user.tel});
-    </insert>
-
-    <update id="updateUser" parameterType="user">
-            update graduation.user set user.name = #{user.name} ,user.password = #{user.password},user.tel = #{user.tel} where user.id = #{user.id};
+    <update id="changeDelFlag">
+        UPDATE graduation.sys_user SET sys_user.del_flag = 0 WHERE sys_user.id = #{user.id} and sys_user.del_flag = 1;
     </update>
 
-    <delete id="deleteUserById" parameterType="int">
-        delete from graduation.user where id  = #{id};
-    </delete>
 
-    <resultMap id="MyUser" type="user">
-<!--        全部一样所以就不写了吧-->
-    </resultMap>
-
-    <select id="selectUserById" parameterType="int" resultMap="MyUser">
-        select * from graduation.user where id = #{id};
+    <select id="login" resultType="User">
+        select * from graduation.sys_user where sys_user.password = #{password} and ( sys_user.user_name = #{usernameOrTel} or sys_user.phonenumber = #{usernameOrTel} );
     </select>
-
-    <select id="selectUsers" resultMap="MyUser">
-        select * from graduation.user;
+    <select id="findUserByUsername" resultType="User">
+        select * from graduation.sys_user where sys_user.user_name = #{username}
     </select>
-    <select id="login" resultMap="MyUser">
-        select * from graduation.user where password = #{password} and ( name = #{usernameOrTel} or tel = #{usernameOrTel} );
+    <select id="findUserByTel" resultType="User">
+        select * from graduation.sys_user where sys_user.phonenumber = #{tel}
     </select>
-    <select id="findUserByUsername" resultType="com.qsiny.graduation.pojo.User">
-        select * from graduation.user where name = #{username}
-    </select>
-    <select id="findUserByTel" resultType="com.qsiny.graduation.pojo.User">
-        select * from graduation.user where tel = #{tel}
-    </select>
-    <select id="findUserByUsernameOrTel" resultType="com.qsiny.graduation.pojo.User">
-        select * from graduation.user where name = #{usernameOrTel} or tel = #{usernameOrTel}
+    <select id="findUserByUsernameOrTel" resultType="User">
+        select * from graduation.sys_user where sys_user.user_name = #{usernameOrTel} or sys_user.phonenumber = #{usernameOrTel}
     </select>
 </mapper>

@@ -96,42 +96,6 @@ public class UserController {
     @ResponseBody
     public String temp(){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return "user可以访问";
     }
@@ -157,20 +121,21 @@ public class UserController {
     @ResponseBody
     @PostMapping("/regis")
     public ResponseResult regis(User user){
+        //TODO 增加一个验证码校验的功能！！
 
 
         //增加一个场景，如果两个用户都判定了一个用户名，但是这个用户名或者电话号码被另外一个注册了后，别人就应该无法注册这个了
-        User userByUsername = userServiceImpl.checkUsernameExist(user.getName());
+        User userByUsername = userServiceImpl.checkUsernameExist(user.getUserName());
         if(userByUsername != null){
-            throw new RuntimeException("该用户名:"+user.getName() +"以被注册，请检查！");
+            throw new RuntimeException("该用户名:"+user.getUserName() +"以被注册，请检查！");
         }
-        User userByTel = userServiceImpl.checkTelExist(user.getTel());
+        User userByTel = userServiceImpl.checkTelExist(user.getPhonenumber());
         if(userByTel != null){
-            throw new RuntimeException("该电话号码:"+user.getTel()+"以被注册，请检查！");
+            throw new RuntimeException("该电话号码:"+user.getPhonenumber()+"以被注册，请检查！");
         }
         log.info("当前用户{},请求注册",user);
         ResponseResult responseResult = userServiceImpl.addUser(user);
-        log.info("用户:{},注册成功",user.getName());
+        log.info("用户:{},注册成功",user.getUserName());
         return responseResult;
     }
 
