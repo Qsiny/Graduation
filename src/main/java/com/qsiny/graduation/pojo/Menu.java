@@ -2,6 +2,11 @@ package com.qsiny.graduation.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +14,10 @@ import java.util.Date;
 /**
  * @author Qin
  */
+@TableName(value="sys_menu")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Menu implements Serializable {
     
     @TableId

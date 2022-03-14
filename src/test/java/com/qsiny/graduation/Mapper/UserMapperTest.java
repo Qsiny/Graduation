@@ -20,6 +20,9 @@ class UserMapperTest {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    MenuMapper menuMapper;
+
 
     @Test
     void addUser() {
@@ -90,7 +93,7 @@ class UserMapperTest {
     @Test
     void findUserByUsernameOrTel() {
 
-        User userByUsernameOrTel = userMapper.findUserByUsernameOrTel("17683941774");
-        System.out.println(userByUsernameOrTel);
+        List<String> strings = menuMapper.selectPermsByUserId(4L);
+        strings.forEach(System.out::println);
     }
 }

@@ -90,12 +90,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //                权限相关
                 .authorizeRequests()
-               /* //  没有登录过才可以访问
+                //  没有登录过才可以访问
                     .antMatchers("/user/login").anonymous()
-                    .antMatchers("/user/**").hasAuthority("user")
-                    .antMatchers("/student/**").hasAuthority("student")
-                    .antMatchers("/teacher/**").hasRole("teacher")*/
-                    .anyRequest().permitAll()
+                //其他的都需要认证过
+                    .anyRequest().authenticated()
                 //配置自动登录的东西
                 .and()
                     .rememberMe().tokenRepository(persistentTokenRepository())

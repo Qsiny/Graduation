@@ -1,5 +1,6 @@
 package com.qsiny.graduation.service.Impl;
 
+import com.qsiny.graduation.Mapper.MenuMapper;
 import com.qsiny.graduation.Mapper.UserMapper;
 import com.qsiny.graduation.pojo.LoginUser;
 import com.qsiny.graduation.pojo.User;
@@ -29,6 +30,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public UserDetails loadUserByUsername(String message) throws UsernameNotFoundException {
 
@@ -37,10 +41,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户名或密码错误");
         }
 
-        ArrayList<String> permissions = new ArrayList<>();
-        permissions.add("user");
+        //从数据库中查询用户权限
+        List<String> menus = menuMapper.selectPermsByUserId(user.getId());
 
-        return new LoginUser(user,permissions);
+        //手动添加user权限
+//        ArrayList<String> permissions = new ArrayList<>();
+//        permissions.add("user");
+
+        return new LoginUser(user,menus);
 
 
     }

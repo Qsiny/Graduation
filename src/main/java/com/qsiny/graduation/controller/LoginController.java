@@ -32,10 +32,24 @@ public class LoginController {
        return userService.login(usernameOrTel,password);
     }
 
-    @PreAuthorize("hasAnyAuthority('user111')")
+    /**
+     * 用来测试是否含有lookPublicMessage权限
+     * @return
+     */
+    @PreAuthorize("hasAnyAuthority('lookPublicMessage')")
     @RequestMapping("/helloOne")
-    public String hello(){
-        return "hello";
+    public String helloOne(){
+        return "查看消息";
+    }
+
+    /**
+     * 用来测试是否含有lookPublicMessage权限
+     * @return
+     */
+    @PreAuthorize("hasAnyAuthority('changePublicMessage')")
+    @RequestMapping("/helloTwo")
+    public String helloTwo(){
+        return "修改消息";
     }
 
     @RequestMapping("/user/logout")
