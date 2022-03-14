@@ -9,7 +9,7 @@ spring:
 
     druid:
       aop-patterns: com.qsiny.graduation.*  #监控SpringBean
-      filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
+      filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）my
 
       stat-view-servlet:   # 配置监控页功能
         enabled: true
