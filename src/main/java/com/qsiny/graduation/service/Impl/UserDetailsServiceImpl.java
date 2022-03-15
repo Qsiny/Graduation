@@ -1,21 +1,16 @@
 package com.qsiny.graduation.service.Impl;
 
-import com.qsiny.graduation.Mapper.MenuMapper;
-import com.qsiny.graduation.Mapper.UserMapper;
+import com.qsiny.graduation.mapper.MenuMapper;
+import com.qsiny.graduation.mapper.UserMapper;
 import com.qsiny.graduation.pojo.LoginUser;
 import com.qsiny.graduation.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

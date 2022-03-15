@@ -1,9 +1,12 @@
 package com.qsiny.graduation.service.Impl;
 
-import com.qsiny.graduation.Mapper.UserMapper;
+import com.qsiny.graduation.enums.UserTypeEnum;
+import com.qsiny.graduation.mapper.MenuMapper;
+import com.qsiny.graduation.mapper.UserMapper;
 import com.qsiny.graduation.pojo.LoginUser;
 import com.qsiny.graduation.pojo.ResponseResult;
 import com.qsiny.graduation.pojo.User;
+import com.qsiny.graduation.service.RoleService;
 import com.qsiny.graduation.service.UserService;
 import com.qsiny.graduation.utils.JwtUtil;
 import com.qsiny.graduation.utils.RedisCache;
@@ -39,31 +42,41 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private MenuMapper menuMapper;
+
     @Override
     public ResponseResult addUser(User user) {
 
+        //密码加密
         String password = user.getPassword();
         String encodePassword = passwordEncoder.encode(password);
         user.setPassword(encodePassword);
-        List<String> permissions = new ArrayList<>();
-
-        permissions.add("user");
-        LoginUser loginUser = new LoginUser(user,permissions);
-        String userId = String.valueOf(user.getId());
-
-        //存入数据库
+        user.setUserType(UserTypeEnum.NORMAL);
+        //先存入数据库
         userMapper.insert(user);
+        //修改权限 在数据库添加用户角色 与用户的访问权限
+        Long roleId = roleService.selectRoleIdByRoleKey("user");
+        Long userId = userMapper.findUserByUsername(user.getUserName()).getId();
+        roleService.connectUserAndRole(userId, roleId);
+
+        //查询角色的权限信息
+        List<String> permissions = menuMapper.selectPermsByUserId(userId);
+        LoginUser loginUser = new LoginUser(user,permissions);
 
         //存入redis
         redisCache.setCacheObject("userid:"+userId,loginUser);
         Collection<? extends GrantedAuthority> authorities = loginUser.getAuthorities();
 
         //产生token返回
-        String jwt = JwtUtil.createJWT(userId);
+        String jwt = JwtUtil.createJWT(String.valueOf(userId));
 
-        /*UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,authorities);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,authorities);
         //将权限信息放入securityManager
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);*/
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         return new ResponseResult(200,"注册成功",jwt);
     }

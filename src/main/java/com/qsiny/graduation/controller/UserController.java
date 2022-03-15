@@ -30,11 +30,9 @@ import java.util.concurrent.TimeUnit;
 @Controller
 public class UserController {
 
-    @Resource
-    RedisCache redisCache;
 
     @Resource
-    private UserService userServiceImpl;
+    private UserService userService;
 
     @Resource
     private UserDetailsService userDetailsServiceImpl;
@@ -125,16 +123,16 @@ public class UserController {
 
 
         //增加一个场景，如果两个用户都判定了一个用户名，但是这个用户名或者电话号码被另外一个注册了后，别人就应该无法注册这个了
-        User userByUsername = userServiceImpl.checkUsernameExist(user.getUserName());
+        User userByUsername = userService.checkUsernameExist(user.getUserName());
         if(userByUsername != null){
             throw new RuntimeException("该用户名:"+user.getUserName() +"以被注册，请检查！");
         }
-        User userByTel = userServiceImpl.checkTelExist(user.getPhonenumber());
+        User userByTel = userService.checkTelExist(user.getPhonenumber());
         if(userByTel != null){
             throw new RuntimeException("该电话号码:"+user.getPhonenumber()+"以被注册，请检查！");
         }
         log.info("当前用户{},请求注册",user);
-        ResponseResult responseResult = userServiceImpl.addUser(user);
+        ResponseResult responseResult = userService.addUser(user);
         log.info("用户:{},注册成功",user.getUserName());
         return responseResult;
     }
@@ -142,10 +140,10 @@ public class UserController {
     @ResponseBody
     @PostMapping("/regis/checkUsernameExist")
     public String checkUsernameExist(String username){
-        User user = userServiceImpl.checkUsernameExist(username);
+        User user = userService.checkUsernameExist(username);
 //        如果用户名已经存在了 则反馈给前台
         if(user != null){
-
+            log.info("当前用户名存在:"+username);
             return "用户名已存在";
         }
 
@@ -155,14 +153,11 @@ public class UserController {
     @ResponseBody
     @PostMapping("/regis/checkTelExist")
     public String checkTelExist(String tel){
-//        System.out.println(tel);
-        User user = userServiceImpl.checkTelExist(tel);
-//        System.out.println(user);
+        User user = userService.checkTelExist(tel);
         if(user != null){
-            System.out.println("电话号码已存在");
+            log.info("电话号码已存在:"+tel);
             return "电话号码已存在";
         }
-//        System.out.println("电话号码不存在");
         return "电话号码不存在";
     }
 

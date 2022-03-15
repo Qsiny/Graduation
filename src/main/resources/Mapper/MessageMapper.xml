@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsiny.graduation.mapper.MessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.qsiny.graduation.pojo.Message">
+            <result property="messageId" column="message_id" jdbcType="BIGINT"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="studentId" column="student_id" jdbcType="VARCHAR"/>
+            <result property="confirmFlag" column="confirm_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,teacher_name,teacher_id,
+        create_time,message,student_id,
+        confirm_flag
+    </sql>
+    <update id="updateMessage">
+        UPDATE sys_message SET create_time=?, message=#{message} WHERE message_id=#{messageId} AND confirm_flag=0
+    </update>
+    <select id="showSentMessage" resultType="com.qsiny.graduation.pojo.Message">
+        SELECT DISTINCT message_id,create_time,message
+        FROM
+            sys_message
+        WHERE
+            teacher_id = #{teacherId};
+    </select>
+</mapper>

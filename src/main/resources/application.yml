@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/graduation?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://47.96.39.28:3306/graduation?useUnicode=true&characterEncoding=utf8&&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
@@ -50,7 +50,7 @@ mybatis-plus:
   type-aliases-package: com.qsiny.graduation.pojo
   type-enums-package: com/qsiny/graduation/enums
     #  config-location: classpath:mybatis/mybatis-config.xml   #指定mybatis全局配置文件的路径
-  mapper-locations: classpath:Mapper/**.xml        #指定mapper.xml配置文件的路径
+  mapper-locations: classpath:mapper/**.xml        #指定mapper.xml配置文件的路径
 #  配置默认的log
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

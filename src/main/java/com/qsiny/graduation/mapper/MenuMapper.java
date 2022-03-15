@@ -1,4 +1,4 @@
-package com.qsiny.graduation.Mapper;
+package com.qsiny.graduation.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qsiny.graduation.pojo.Menu;

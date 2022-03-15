@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qsiny.graduation.Mapper.MenuMapper">
+<mapper namespace="com.qsiny.graduation.mapper.MenuMapper">
 
 
     <select id="selectPermsByUserId" resultType="java.lang.String">
