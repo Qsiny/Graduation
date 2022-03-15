@@ -1,6 +1,6 @@
 package com.qsiny.graduation.service.Impl;
 
-import com.qsiny.graduation.Mapper.UserMapper;
+import com.qsiny.graduation.mapper.UserMapper;
 import com.qsiny.graduation.pojo.LoginUser;
 import com.qsiny.graduation.pojo.ResponseResult;
 import com.qsiny.graduation.pojo.User;

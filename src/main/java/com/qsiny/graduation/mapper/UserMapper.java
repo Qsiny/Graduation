@@ -1,11 +1,9 @@
-package com.qsiny.graduation.Mapper;
+package com.qsiny.graduation.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qsiny.graduation.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * @author Qin

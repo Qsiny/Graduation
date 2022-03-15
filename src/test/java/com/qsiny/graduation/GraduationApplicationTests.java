@@ -1,7 +1,7 @@
 package com.qsiny.graduation;
 
 
-import com.qsiny.graduation.Mapper.UserMapper;
+import com.qsiny.graduation.mapper.UserMapper;
 import com.qsiny.graduation.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
