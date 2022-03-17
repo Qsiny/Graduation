@@ -11,9 +11,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RoleApplyService {
 
-    ResponseResult addRoleApply(Long userId, String realName, String email, int userType, String gradeId, String facultyId, String professionId, String classId);
+    ResponseResult addRoleApply(Long userId, String realName, String email, String userType, String gradeId, String facultyId, String professionId, String classId);
 
-    ResponseResult addRoleApply(Long userId, String realName, String email, int userType, String gradeId, String facultyId, String professionId);
+    ResponseResult addRoleApply(Long userId, String realName, String email, String userType, String gradeId, String facultyId, String professionId);
 
     ResponseResult showApply(String facultyId);
 

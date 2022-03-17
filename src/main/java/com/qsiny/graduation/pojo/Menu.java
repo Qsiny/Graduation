@@ -52,12 +52,12 @@ public class Menu implements Serializable {
     */
     private String icon;
     
-    private Long createBy;
+    private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date createTime;
     
-    private Long updateBy;
+    private String updateBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date updateTime;

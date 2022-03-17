@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 */
 public interface RoleService{
 
-    ResponseResult addRole(String roleName, String roleKey, Long creatorId);
+    ResponseResult addRole(String roleName, String roleKey, String creatorId);
 
     boolean hasRole(String roleName, String roleKey);
 

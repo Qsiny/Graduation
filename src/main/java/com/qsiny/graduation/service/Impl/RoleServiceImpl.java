@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService{
     private RoleMapper roleMapper;
 
     @Override
-    public ResponseResult addRole(String roleName, String roleKey, Long creatorId) {
+    public ResponseResult addRole(String roleName, String roleKey, String creatorId) {
 
         Role role = new Role();
         role.setName(roleName);
@@ -44,7 +44,7 @@ public class RoleServiceImpl implements RoleService{
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Role::getName,roleName).eq(Role::getRoleKey,roleKey);
         Role role = roleMapper.selectOne(lambdaQueryWrapper);
-        return role == null;
+        return role != null;
     }
 
     @Override

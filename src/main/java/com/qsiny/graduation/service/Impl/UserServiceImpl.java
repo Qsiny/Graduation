@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         String password = user.getPassword();
         String encodePassword = passwordEncoder.encode(password);
         user.setPassword(encodePassword);
-        user.setUserType(UserTypeEnum.NORMAL);
+        user.setUserType(UserTypeEnum.NORMAL.getUserType());
         user.setCreateTime(new Date(System.currentTimeMillis()));
         //先存入数据库
         userMapper.insert(user);

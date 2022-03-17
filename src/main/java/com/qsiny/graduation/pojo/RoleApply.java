@@ -34,12 +34,12 @@ public class RoleApply implements Serializable {
     /**
      * 邮箱
      */
-    private String eamil;
+    private String email;
 
     /**
      * 用户申请的角色（0普通用户,1学生,2老师）
      */
-    private Integer userType;
+    private String userType;
 
     /**
      * 年级

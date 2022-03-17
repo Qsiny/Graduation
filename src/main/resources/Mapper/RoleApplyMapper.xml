@@ -8,7 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="realName" column="real_name" jdbcType="VARCHAR"/>
-            <result property="eamil" column="eamil" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
             <result property="userType" column="user_type" jdbcType="INTEGER"/>
             <result property="gradeId" column="grade_id" jdbcType="VARCHAR"/>
             <result property="facultyId" column="faculty_id" jdbcType="VARCHAR"/>

@@ -69,20 +69,20 @@ public class User implements Serializable {
     /**
      * 用户类型（0普通用户，1学生，2老师，3管理员）
      */
-    private UserTypeEnum userType;
+    private String userType;
     /**
-     * 创建人的用户id
+     * 创建人的工作id
      */
-    private Long createBy;
+    private String createBy;
     /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date createTime;
     /**
-     * 更新人
+     * 更新人的工作ID
      */
-    private Long updateBy;
+    private String updateBy;
     /**
      * 更新时间
      */

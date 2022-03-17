@@ -45,7 +45,7 @@ public class Role implements Serializable {
     /**
      * 
      */
-    private Long createBy;
+    private String createBy;
 
     /**
      * 
@@ -56,7 +56,7 @@ public class Role implements Serializable {
     /**
      * 
      */
-    private Long updateBy;
+    private String updateBy;
 
     /**
      * 

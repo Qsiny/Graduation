@@ -20,11 +20,10 @@ public class RoleApplyController {
     private RoleApplyService roleApplyService;
 
     /**
-     * 申请学生角色
+     * 申请学生角色，这个功能需要设置权限：只有user用户具有这个权限，其他的ROLE不可以有这个权限
      * @param userId
      * @param realName
      * @param email
-     * @param userType
      * @param gradeId
      * @param facultyId
      * @param professionId
@@ -32,25 +31,24 @@ public class RoleApplyController {
      * @return
      */
     @RequestMapping("/applyStudentRole")
-    public ResponseResult applyStudentRole(Long userId,String realName,String email,int userType,String gradeId,String facultyId,String professionId,String classId){
-       return roleApplyService.addRoleApply(userId,realName,email,userType,gradeId,facultyId,professionId,classId);
+    public ResponseResult applyStudentRole(Long userId,String realName,String email,String gradeId,String facultyId,String professionId,String classId){
+        return roleApplyService.addRoleApply(userId,realName,email,"1",gradeId,facultyId,professionId,classId);
 
     }
 
     /**
-     * 申请老师角色
+     * 申请老师角色 这个功能需要设置权限：只有user和student用户具有这个权限，其他的ROLE不可以有这个权限
      * @param userId
      * @param realName
      * @param email
-     * @param userType
      * @param gradeId
      * @param facultyId
      * @param professionId
      * @return
      */
     @RequestMapping("/applyTeacherRole")
-    public ResponseResult applyTeacherRole(Long userId,String realName,String email,int userType,String gradeId,String facultyId,String professionId){
-        return roleApplyService.addRoleApply(userId,realName,email,userType,gradeId,facultyId,professionId);
+    public ResponseResult applyTeacherRole(Long userId,String realName,String email,String gradeId,String facultyId,String professionId){
+        return roleApplyService.addRoleApply(userId,realName,email,"2",gradeId,facultyId,professionId);
     }
 
     /**
@@ -73,8 +71,8 @@ public class RoleApplyController {
     }
 
     /**
-     * 老师确认学生的请求
-     * @param applyId
+     * 老师确认学生的请求，并更新学生的信息
+     * @param applyId 申请的ID
      * @param teacherJobId
      * @return
      */

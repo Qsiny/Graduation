@@ -19,7 +19,7 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping("/addRole")
-    public ResponseResult addRole(String roleName,String roleKey,Long creatorId){
+    public ResponseResult addRole(String roleName,String roleKey,String creatorId){
         if(roleService.hasRole(roleName,roleKey)){
             return new ResponseResult(404,"已经存在此同名同关键字的角色了");
         }

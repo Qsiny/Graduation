@@ -9,6 +9,7 @@ import lombok.Data;
 
 /**
  * 工作表
+ * @author Qin
  * @TableName sys_job
  */
 @TableName(value ="sys_job")
