@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qsiny.graduation.enums.UserSexEnum;
 import com.qsiny.graduation.enums.UserStatusEnum;
 import com.qsiny.graduation.enums.UserTypeEnum;
@@ -76,6 +77,7 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date createTime;
     /**
      * 更新人
@@ -84,6 +86,7 @@ public class User implements Serializable {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date updateTime;
     /**
      * 删除标志（0代表未删除，1代表已删除）

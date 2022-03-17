@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
         String encodePassword = passwordEncoder.encode(password);
         user.setPassword(encodePassword);
         user.setUserType(UserTypeEnum.NORMAL);
+        user.setCreateTime(new Date(System.currentTimeMillis()));
         //先存入数据库
         userMapper.insert(user);
         //修改权限 在数据库添加用户角色 与用户的访问权限
