@@ -1,224 +1,225 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>注册</title>
-  <link rel="stylesheet" href="css/login_regis.css">
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
-  <!-- Bootstrap的所有JS组件都是依赖jQuery的，所以必须放在前边-->
-  <script src="https://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-  <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。-->
-  <script src="bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-    var countdown=60;
-    $(function () {
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="css/login_regis.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <!-- Bootstrap的所有JS组件都是依赖jQuery的，所以必须放在前边-->
+    <script src="https://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。-->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var countdown=60;
+        $(function () {
 
-        $("#username").blur(function (){
+            $("#username").blur(function (){
 
-          let username = $("#username").val();
-          console.log(username);
-          let usernameTemp = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+                let username = $("#username").val();
+                console.log(username);
+                let usernameTemp = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
 
-          if(!usernameTemp.test(username)){
-              console.log("当前不符合规则");
-              $(".nameError").text("用户名输入不符合规范");
-              return;
-          }
+                if(!usernameTemp.test(username)){
+                    console.log("当前不符合规则");
+                    $(".nameError").text("用户名输入不符合规范");
+                    return;
+                }
 
-          $.post("/regis/checkUsernameExist", { username: username },
-                  function(data){
-                    if(data === "用户名已存在"){
-                      $(".nameError").text("用户名以存在");
-                    }else{
-                      $(".nameError").text("");
-                    }
-          });
+                $.post("/regis/checkUsernameExist", { username: username },
+                    function(data){
+                        if(data === "用户名已存在"){
+                            $(".nameError").text("用户名以存在");
+                        }else{
+                            $(".nameError").text("");
+                        }
+                    });
+
+            });
+
+            $("#tel").blur(function (){
+                let tel = $("#tel").val();
+
+                let telTemp = /^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/;
+
+                if(!telTemp.test(tel)){
+                    $(".telError").text("电话号码输入不符合规范");
+                    return;
+                }
+                //以ajax.post 发一个请求去验证是否存在了这个电话号码
+                $.post("/regis/checkTelExist", { tel: tel },
+                    function(data){
+                        if(data === "电话号码已存在"){
+                            $(".telError").text("电话号码以存在");
+                        }else{
+                            $(".telError").text("");
+                        }
+                    });
+            });
+
+
+
+            $("#password").blur(function (){
+                let password = $("#password").val();
+                // console.log(password);
+                let passwordTemp = /^[a-zA-Z]\w{5,17}$/;
+                if(!passwordTemp.test(password)){
+                    $(".pwdError").text("密码输入不符合规范");
+                }else{
+                    $(".pwdError").text("");
+                }
+            });
+
+            $("#rePassword").blur(function (){
+                let rePassword = $("#rePassword").val();
+                let password = $("#password").val();
+                if(password !== rePassword){
+                    $(".rePwdError").text("两次密码输入不不一致");
+                }else{
+                    $(".rePwdError").text("");
+                }
+            });
+
+            $("#model").click(function (){
+
+                if( $(".nameError").html() !== "" || $("#username").val() === "" ){
+                    alert("请检查用户名输入是否正确");
+                    return ;
+                }
+
+                if( $(".telError").html() !== "" || $("#tel").val() === ""){
+                    alert("请检查电话号码输入是否正确");
+                    return ;
+                }
+                if($(".pwdError").html() !== "" || $("#password").val() === ""){
+                    alert( "请检查密码输入是否正确" );
+                    return ;
+                }
+
+                if($(".rePwdError").html() !== "" || $("#rePassword").val() === ""){
+                    alert( "请检查密码第二次输入与第一次输入是否一致" );
+                    return ;
+                }
+
+                $("#myModel").modal('show');
+
+            })
 
         });
 
-      $("#tel").blur(function (){
-        let tel = $("#tel").val();
-
-        let telTemp = /^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/;
-
-        if(!telTemp.test(tel)){
-          $(".telError").text("电话号码输入不符合规范");
-          return;
-        }
-        //以ajax.post 发一个请求去验证是否存在了这个电话号码
-        $.post("/regis/checkTelExist", { tel: tel },
-                function(data){
-                  if(data === "电话号码已存在"){
-                    $(".telError").text("电话号码以存在");
-                  }else{
-                    $(".telError").text("");
-                  }
-                });
-      });
-
-
-
-      $("#password").blur(function (){
-        let password = $("#password").val();
-        // console.log(password);
-        let passwordTemp = /^[a-zA-Z]\w{5,17}$/;
-        if(!passwordTemp.test(password)){
-          $(".pwdError").text("密码输入不符合规范");
-        }else{
-          $(".pwdError").text("");
-        }
-      });
-
-      $("#rePassword").blur(function (){
-        let rePassword = $("#rePassword").val();
-        let password = $("#password").val();
-        if(password !== rePassword){
-          $(".rePwdError").text("两次密码输入不不一致");
-        }else{
-          $(".rePwdError").text("");
-        }
-      });
-
-      $("#model").click(function (){
-
-        if( $(".nameError").html() !== "" || $("#username").val() === "" ){
-          alert("请检查用户名输入是否正确");
-          return ;
-        }
-
-        if( $(".telError").html() !== "" || $("#tel").val() === ""){
-          alert("请检查电话号码输入是否正确");
-          return ;
-        }
-        if($(".pwdError").html() !== "" || $("#password").val() === ""){
-          alert( "请检查密码输入是否正确" );
-          return ;
-        }
-
-        if($(".rePwdError").html() !== "" || $("#rePassword").val() === ""){
-          alert( "请检查密码第二次输入与第一次输入是否一致" );
-          return ;
-        }
-
-        $("#myModel").modal('show');
-
-      })
-
-    });
-
-  </script>
+    </script>
 </head>
 <body>
 
-    <div class="card">
-      <div class="card_front">
+<div class="card">
+    <div class="card_front">
         <div class="front_right">
-          <div class="front_form">
-            <h1>注册</h1>
-            <form id="form" content="">
-              <input type="text" class="text" name="userName" id="username" placeholder="请输入用户名" title="用户名以字母开头，且长度在5-16">
-              <span class="error nameError"></span>
-              <input type="text" class="text" name="phonenumber" id="tel" placeholder="请输入电话号码">
-              <span class="error telError"></span>
-              <input type="password" class="text" name="password" id="password" placeholder="请输入密码" title="以字母开头，长度在6~18之间，只能包含字母、数字和下划线">
-              <span class="error pwdError"></span>
-              <input type="password" class="text" name="rePassword" id="rePassword" placeholder="请重复输入密码">
-              <span class="error rePwdError"></span>
+            <div class="front_form">
+                <h1>注册</h1>
+                <form id="form" content="" enctype='application/json'>
+                    <input type="text" class="text" name="userName" id="username" placeholder="请输入用户名" title="用户名以字母开头，且长度在5-16">
+                    <span class="error nameError"></span>
+                    <input type="text" class="text" name="phonenumber" id="tel" placeholder="请输入电话号码">
+                    <span class="error telError"></span>
+                    <input type="password" class="text" name="password" id="password" placeholder="请输入密码" title="以字母开头，长度在6~18之间，只能包含字母、数字和下划线">
+                    <span class="error pwdError"></span>
+                    <input type="password" class="text" name="rePassword" id="rePassword" placeholder="请重复输入密码">
+                    <span class="error rePwdError"></span>
 
-            </form>
+                </form>
 
-            <button id="model" role="button" class="login" >注册</button>
-          </div>
-          <a class="to_login" href="/toLogin">点击此处前去登录</a>
+                <button id="model" role="button" class="login" >注册</button>
+            </div>
+            <a class="to_login" href="/toLogin">点击此处前去登录</a>
         </div>
         <div class="back_left"></div>
-      </div>
     </div>
+</div>
 
-    <div class="">
-      <div class="row">
+<div class="">
+    <div class="row">
         <div class="col-md-12 column">
-          <div class="modal fade" id="myModel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h4 class="modal-title" id="myModalLabel">
-                    请输入验证码
-                  </h4>
+            <div class="modal fade" id="myModel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                请输入验证码
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <form class="form-horizontal" role="form">
+                                <div class="col-md-3 form-group">
+                                    <label class="control-label" for="code">请输入验证码</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input class="form-control" type="text" id="code">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" id="sendCode" class="btn btn-success text-center" value="免费获取验证码" />
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <!--                        这个地方可以考虑 根据发送是否成功来进行一个反馈，类似：是否达到了每日的最大次数，超时-->
+                                        <input type="text" class="form-control" value="验证码输入有误" id="code-message" style="visibility: hidden;border: none; color: red">
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="regis">提交</button>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="modal-body">
-
-
-                  <form class="form-horizontal" role="form">
-                    <div class="col-md-3 form-group">
-                      <label class="control-label" for="code">请输入验证码</label>
-                    </div>
-                    <div class="col-md-5">
-                      <input class="form-control" type="text" id="code">
-                    </div>
-                    <div class="col-md-2">
-                      <input type="button" id="sendCode" class="btn btn-success text-center" value="免费获取验证码" />
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-5">
-<!--                        这个地方可以考虑 根据发送是否成功来进行一个反馈，类似：是否达到了每日的最大次数，超时-->
-                        <input type="text" class="form-control" value="验证码输入有误" id="code-message" style="visibility: hidden;border: none; color: red">
-                      </div>
-                    </div>
-
-                  </form>
-
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                  <button type="button" class="btn btn-primary" id="regis">提交</button>
-                </div>
-              </div>
-
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <script type="text/javascript">
-      var wait=60;
-      function time(o) {
+<script type="text/javascript">
+    var wait=60;
+    function time(o) {
         if (wait == 0) {
-          o.removeAttribute("disabled");
-          o.value="免费获取验证码";
-          wait = 60;
+            o.removeAttribute("disabled");
+            o.value="免费获取验证码";
+            wait = 60;
         } else {
 
-          o.setAttribute("disabled", true);
-          o.value= wait+"s后重新发送";
-          wait--;
-          setTimeout(function() {
+            o.setAttribute("disabled", true);
+            o.value= wait+"s后重新发送";
+            wait--;
+            setTimeout(function() {
                     time(o)
-                  },
-                  1000)
+                },
+                1000)
         }
-      }
-      document.getElementById("sendCode").onclick=function(){
+    }
+    document.getElementById("sendCode").onclick=function(){
         time(this);
         $.get("/sendCode", $("#tel").val(),function (data){
-          //根据data返回值的不用就看是否需要在文本框下面出一个提示信息
+            //根据data返回值的不用就看是否需要在文本框下面出一个提示信息
 
         });
-      }
-    </script>
-    <script type="text/javascript">
-      $("#regis").click(function (){
+    }
+</script>
+<script type="text/javascript">
+    $("#regis").click(function (){
 
         // 获取文本框中的验证码
-          let code = $("#code").val();
-          console.log(code);
+        let code = $("#code").val();
+        console.log(code);
         //先判断验证码是否输入正确 如果不正确 则不会发数据给后台
         if(code === "1234"){
             //将表单数据传给后台 进行保存操作 然后实现页面跳转
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url:"/regis",
                 data:$("#form").serialize(),
@@ -229,16 +230,32 @@
                         alert("发生错误！！！");
                     }
                 }
+            });*/
+
+            $.ajax({
+                type:'post',
+                url:'/regis',
+                dataType:'json',
+                contentType: 'application/json;charset=UTF-8',
+                // contentType: 'application/x-www-form-urlencoded',
+                data:  JSON.stringify($("#form").serializeJSON()),
+                success: function (data){
+                    if(data.code === 200){
+                        // 将token存入本地
+                        localStorage.token = data.data;
+                        window.location.href = "/index";
+                    }else{
+                        alert("发生错误！！！");
+                    }
+                }
             });
+
 
         }else{
             $("#code-message").css({visibility:"visible"});
         }
-
-
-
-      })
-    </script>
+    })
+</script>
 
 
 </body>

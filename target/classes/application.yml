@@ -36,6 +36,7 @@ spring:
     database: 0
     port: 6379
     host: 47.96.39.28
+    password: qin123
     lettuce:
       pool:
         min-idle: 5

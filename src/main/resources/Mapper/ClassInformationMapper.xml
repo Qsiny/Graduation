@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsiny.graduation.mapper.ClassInformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.qsiny.graduation.pojo.ClassInformation">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="gradeId" column="grade_id" jdbcType="VARCHAR"/>
+            <result property="gradeName" column="grade_name" jdbcType="VARCHAR"/>
+            <result property="facultyId" column="faculty_id" jdbcType="VARCHAR"/>
+            <result property="facultyName" column="faculty_name" jdbcType="VARCHAR"/>
+            <result property="professionId" column="profession_id" jdbcType="VARCHAR"/>
+            <result property="professionName" column="profession_name" jdbcType="VARCHAR"/>
+            <result property="classId" column="class_id" jdbcType="VARCHAR"/>
+            <result property="className" column="class_name" jdbcType="VARCHAR"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,grade_id,grade_name,
+        faculty_id,faculty_name,profession_id,
+        profession_name,class_id,class_name,
+        create_by,create_time,del_flag
+    </sql>
+</mapper>

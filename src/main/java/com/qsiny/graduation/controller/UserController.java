@@ -1,25 +1,17 @@
 package com.qsiny.graduation.controller;
 
-import com.qsiny.graduation.config.SecurityConfig;
+import com.alibaba.fastjson.JSON;
 import com.qsiny.graduation.pojo.ResponseResult;
 import com.qsiny.graduation.pojo.User;
 import com.qsiny.graduation.service.UserService;
-import com.qsiny.graduation.util.WebUtils;
-import com.qsiny.graduation.utils.RedisCache;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author Qin
@@ -87,7 +79,7 @@ public class UserController {
 
     @GetMapping("/temp")
     public String temp1(){
-       return "temp";
+        return "temp";
     }
 
     @GetMapping("/user/temp")
@@ -118,7 +110,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/regis")
-    public ResponseResult regis(User user){
+    public ResponseResult regis(@RequestBody User user){
         //TODO 增加一个验证码校验的功能！！
 
 
@@ -163,9 +155,11 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/regis/test")
-    public String test(User user){
+    public String test(@RequestBody User user){
         System.out.println(user);
-        System.out.println("yes");
+//        JSON.parse(user);
+//        User user1 = JSON.parseObject(user, User.class);
+//        System.out.println("user1:"+user1);
         return "yes";
     }
 }
